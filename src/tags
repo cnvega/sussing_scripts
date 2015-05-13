@@ -1,0 +1,48 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+CatalogHeader	forests.h	/^   char **CatalogHeader;     $/;"	m	struct:Rockstar_Data
+Catalogs	forests.h	/^   FILE **Catalogs;$/;"	m	struct:Rockstar_Data
+CountForests	forests.h	/^   int64_t CountForests;$/;"	m	struct:Rockstar_Data
+CountHalos	forests.h	/^   int64_t CountHalos;$/;"	m	struct:Rockstar_Data
+FIDX	select_forests.c	/^int64_t FID, FIDX;$/;"	v
+FID	forests.h	/^   int64_t FID;             \/\/ id$/;"	m	struct:Rockstar_Data
+FID	select_forests.c	/^int64_t FID, FIDX;$/;"	v
+ForestHeader	forests.h	/^   char ForestHeader[LINE_MAX];$/;"	m	struct:Rockstar_Data
+Forest	forests.h	/^   FILE *Forest;$/;"	m	struct:Rockstar_Data
+Forest	select_forests.c	/^FILE *Forest;$/;"	v
+HigherIdx	select_forests.c	/^int64_t LowerIdx, HigherIdx;$/;"	v
+LINE_MAX	forests.h	9;"	d
+LowerIdx	select_forests.c	/^int64_t LowerIdx, HigherIdx;$/;"	v
+MAXFORESTS	select_forests.c	7;"	d	file:
+MergerTreeHeader	forests.h	/^   char MergerTreeHeader[3][LINE_MAX];$/;"	m	struct:Rockstar_Data
+MergerTree	forests.h	/^   FILE *MergerTree;$/;"	m	struct:Rockstar_Data
+NhalosTot	forests.h	/^   int64_t NhalosTot;       \/\/ Number of halos $/;"	m	struct:Rockstar_Data
+NhalosTot	select_forests.c	/^int64_t NhalosTot, Nhalos[OUTPUTS];$/;"	v
+Nhalos	forests.h	/^   int64_t *Nhalos;         \/\/ Number of halos in each snapshot$/;"	m	struct:Rockstar_Data
+Nhalos	select_forests.c	/^int64_t NhalosTot, Nhalos[OUTPUTS];$/;"	v
+Nsnaps	forests.h	/^   int   Nsnaps;$/;"	m	struct:Rockstar_Data
+OUTPUTS	select_forests.c	8;"	d	file:
+Path	forests.h	/^   char  Path[LINE_MAX];     \/\/ Base path of the catalogs$/;"	m	struct:Rockstar_Data
+READ	forests.h	/^enum Status {READ, WRITE};$/;"	e	enum:Status
+Rockstar_Data	forests.h	/^struct Rockstar_Data {$/;"	s
+Status	forests.h	/^enum Status {READ, WRITE};$/;"	g
+WRITE	forests.h	/^enum Status {READ, WRITE};$/;"	e	enum:Status
+Z	forests.h	/^   float *Z;                 \/\/ List of redshifts$/;"	m	struct:Rockstar_Data
+_FORESTS_C	forests.c	2;"	d	file:
+_FORESTS_H	forests.h	2;"	d
+check_halo	select_forests.c	/^bool check_halo(int64_t hidx)$/;"	f
+close_catalogs	forests.c	/^void close_catalogs(struct Rockstar_Data *cat)$/;"	f
+copy_forest	forests.c	/^void copy_forest(struct Rockstar_Data *dest, struct Rockstar_Data *src)$/;"	f
+main	extract_forests.c	/^int main(int argc, char **argv)$/;"	f
+main	select_forests.c	/^void main()$/;"	f
+main	split_forests.c	/^int main(int argc, char **argv)$/;"	f
+next_forest	select_forests.c	/^void next_forest()$/;"	f
+open_catalogs	forests.c	/^open_catalogs(char *basename, float *snaps, int nsnaps, enum Status status)$/;"	f
+open_forest	select_forests.c	/^void open_forest(char *fname)$/;"	f
+read_next_forest	forests.c	/^int64_t read_next_forest(struct Rockstar_Data *cat)$/;"	f
+skip_forest_halos	forests.c	/^void skip_forest_halos(struct Rockstar_Data *cat)$/;"	f
+status	forests.h	/^   enum Status status;$/;"	m	struct:Rockstar_Data	typeref:enum:Rockstar_Data::Status

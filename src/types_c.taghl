@@ -1,0 +1,8 @@
+syn keyword CTagsStructure Rockstar_Data
+syn keyword CTagsMember status NhalosTot Z CountHalos Path CatalogHeader MergerTree CountForests FID Nhalos ForestHeader Catalogs Nsnaps MergerTreeHeader Forest
+syn keyword CTagsGlobalVariable LowerIdx NhalosTot FIDX Forest FID HigherIdx Nhalos
+syn keyword CTagsEnumeratorName Status
+syn keyword CTagsEnumerationValue READ WRITE
+syn keyword CTagsFunction close_catalogs open_forest copy_forest skip_forest_halos open_catalogs next_forest main read_next_forest check_halo
+syn keyword CTagsDefinedName _FORESTS_H OUTPUTS _FORESTS_C LINE_MAX MAXFORESTS
+
