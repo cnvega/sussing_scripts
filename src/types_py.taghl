@@ -1,0 +1,3 @@
+syn keyword CTagsImport sys
+syn keyword CTagsFunction check_order
+
