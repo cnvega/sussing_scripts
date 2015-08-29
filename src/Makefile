@@ -1,6 +1,7 @@
 CC = gcc
-CCFLAGS = -O2 -std=c99 -Wno-unused-result -lm
-#CCFLAGS += -g
+CCFLAGS = -std=c99 -Wno-unused-result -lm
+#CCFLAGS += -O2 
+CCFLAGS += -g
 
 all: select_forests extract_forests split_forests 
 

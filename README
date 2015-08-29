@@ -1,0 +1,151 @@
+####################################################################
+#                                                                  #
+#   SUSSING Scripts                                                #
+#                                                                  #
+#   Author: Cristian Vega <cnvega(at)fcaglp.unlp.edu.ar>           #
+#   Last Update: Aug 27, 2015                                      #
+#                                                                  #
+####################################################################
+
+Contents:
+
+  1. General
+  2. Common codes
+     2.1 'split_forests'
+     2.2 'select_forests'
+     2.3 'extract_forests'
+  3. The read_bin codes
+  4. The Extra scripts
+
+
+1. General
+
+ The codes/scripts included in this folder allows to manipulate the halo
+ catalogs and mergerTree files in the standard SUSSING format. Even though
+ several of the codes share the same library to read and write the forests,
+ each one does not need to call the others for working.
+ There are three groups of scripts included in this package: 
+ - the common codes which are the frequently used for convert/split/
+ extract groups of forest,
+ - the read_bin codes which can parse the binary format of the files to
+ ASCII, and
+ - the extra scripts which perform specific and non common features.
+ Each one of these sets are described in its own section below. 
+
+
+2. Common codes
+
+ It considers all the basic codes for manipulating the Rockstar catalogs in
+ the SUSSING format. These can be easily compiled just by doing make in the
+ root directory of this package:
+ 
+   [> make
+
+ This compiles all the codes listed in the Makefile file found in './src'. 
+ The created executables are described in the following subsections. 
+
+ 2.1  'split_forests'
+  
+ This code reads a set of catalogs in ASCII or binary format and split
+ them up into sub-boxes by following a sequential distribution of the 
+ forests. The output can also be in ASCII or binary format. The conversion
+ is made automatically according to the selection, so the code can also be
+ used for parsing the catalogs from one format to the other. 
+
+ Usage: 
+
+   [>  ./split_forests <inPath> <outPath> <snapList> <NumSnaps> <NumParts> [i|b|o]
+
+ in which: 
+ 
+   <inPath>      Path where the original catalogs ares located.
+   <outPath>     Path where the new catalogs are going to be written. A
+                 set of subfolders named 'BOX_NNN' are created inside this
+                 directory, where NNN starts from 1 to <NumParts>.
+   <snapList>    List of times. It must include the snapshot number, scale
+                 factor and the redshift following the same format as the
+                 example file 'snapList.txt'
+   <NumSnaps>    Number of snapshots/catalogs in the simulation.
+   <NumParts>    Number of boxes of the new catalogs.
+   <forestList>  List of forests created with 'select_forests'
+   [i|b|o]       Optional flag for indicating binary format:
+                 i   input in binary
+                 o   output in binary
+                 b   both in binary
+
+ 2.2  'select_forests'
+
+ This is used for generating the calibration box of the simulation.
+ It takes a list of halos at z=0 (an ASCII file with the halos IDs and 
+ their indexes of their location in the catalog) and generates a new list 
+ with the forests to which the halos belong, excluding the repeated ones. 
+
+ For using this pipeline it is necessary to modify the source code before
+ compiling ('./src/select_forests.c'), by changing the number of outputs of
+ the simulation (number of catalogs), adding the names of the corresponding
+ files and deleting the 'return' instruction included at the beginning of
+ the code for disabling it in the default case. 
+
+ Restrictions: 
+     - this code only works the SUSSING catalogs in their original format 
+       in ASCII
+     - the halos in input halo list must follow the same order than in the 
+       original catalog.
+
+ 2.3  'extract_forests'
+ 
+ This is used for generating the calibration box of the simulation.
+ It takes the list of forests generated with 'select_forests' and it uses
+ it to write a new set of catalogs but only including the selected forests.
+ This code does not require recompiling for being used with different
+ simulations.
+
+ Usage:
+ 
+   [> ./extract_forests <inPath> <outPath> <snapList> <NumSnaps> <forestList> [i|b|o]
+
+ in which:
+
+   <inPath>      Path where the original catalogs ares located.
+   <outPath>     Path where the new catalogs are going to be written.
+   <snapList>    List of times. It must include the snapshot number, scale
+                 factor and the redshift following the same format as the
+                 example file 'snapList.txt'
+   <NumSnaps>    Number of snapshots/catalogs in the simulation.
+   <forestList>  List of forests created with 'select_forests'
+   [i|b|o]       Optional flag for indicating binary format:
+                 i   input in binary
+                 o   output in binary
+                 b   both in binary
+
+
+3. The read_bin codes
+
+ These three codes are located in the './read_bin/' directory and can be 
+ compiled just by doing 'make' in there. Each code can read one of the
+ three types of catalogs in binary: halo list, merger tree and forest
+ list, and it parses them completely to its ASCII version into stdout.
+ Can be used to perform consistency checks or recover the original files.
+
+
+4. The extra scripts
+
+ These python scripts are included for completeness but are not necessary
+ in the common treatment of rockstar-sussing catalogs. These scripts are
+ the followings:
+
+ - 'check_order.py': It checks if a list of halos (like the one needed as
+ input for the 'select_forests') code has its halos ordered by their
+ positions in the original list. This is doing by checking the increasing
+ behaviour of the second column of the file.
+
+ - 'reverse_tree.py': It takes a mergerTree file in ASCII and reverse all
+ the halos of the list, considering its progenitors. This can be used for 
+ add compatibility with other merger tree finders different than
+ 'consistentTrees' which is the one included in Rockstar.
+ There are versions of the AHF MergerTree finder which generates MT files 
+ in where the halos are exactly in the opposite order than the rockstar's
+ one. 
+
+#EOF
+# vim: tw=75 formatoptions+=t 
