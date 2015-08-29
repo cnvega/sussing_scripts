@@ -7,6 +7,7 @@ int main(int argc, char **argv)
    float faux[4];
    char snapName[LINE_MAX], forestList[LINE_MAX];
    char inPath[LINE_MAX], outPath[LINE_MAX];
+   char bintag;
 
    int numSnaps;
    float *ZZ;
@@ -14,10 +15,12 @@ int main(int argc, char **argv)
    int64_t hid, hidx;
 
    struct Rockstar_Data *inCat, *outCat;
+   enum Status stin, stout;
 
-   if (argc != 6)
+   if (argc != 6 && argc != 7)
    {
-      printf("./extract_trees <inPath> <outPath> <snapList> <NumSnaps> <forestList>\n");
+      printf("./extract_forests <inPath> <outPath> <snapList> <NumSnaps> <forestList> [i|b|o]\n"
+             " binary format flag: 'i'(input), 'o'(output) or 'b'(both)\n");
       exit(EXIT_FAILURE);
    }
    sprintf(inPath, "%s", argv[1]);
@@ -25,8 +28,28 @@ int main(int argc, char **argv)
    sprintf(snapName, "%s", argv[3]);
    numSnaps = atoi(argv[4]);
    sprintf(forestList, "%s", argv[5]);
- 
 
+   stin = READ;
+   stout = WRITE;
+
+   if (argc == 7)
+   {
+      bintag = argv[6][0];
+      switch (bintag)
+      {
+         case 'i':
+            stin = READB; 
+            break;
+         case 'o':
+            stout = WRITEB; 
+            break;
+         case 'b':
+            stin = READB; 
+            stout = WRITEB;
+            break;
+      }
+   }
+ 
    /*** The list of snapshots and times ***/
    
    ZZ = malloc(numSnaps*sizeof(float));
@@ -53,8 +76,8 @@ int main(int argc, char **argv)
    }
 
    /* The catalogs: */
-   inCat = open_catalogs(inPath, ZZ, numSnaps, READ);
-   outCat = open_catalogs(outPath, ZZ, numSnaps, WRITE);
+   inCat = open_catalogs(inPath, ZZ, numSnaps, stin);
+   outCat = open_catalogs(outPath, ZZ, numSnaps, stout);
 
    while (!feof(flist))
    {
