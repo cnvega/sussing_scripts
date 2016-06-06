@@ -4,6 +4,7 @@
 #                                                                  #
 #   Author: Cristian Vega <cnvega(at)fcaglp.unlp.edu.ar>           #
 #   Last Update: Aug 27, 2015                                      #
+#   Copyright © 2016 Cristian A. Vega M.                           #
 #                                                                  #
 ####################################################################
 
@@ -31,6 +32,9 @@ Contents:
  ASCII, and
  - the extra scripts which perform specific and non common features.
  Each one of these sets are described in its own section below. 
+
+ All the codes included in this package are distributed under the GNU GPLv3
+ public license. 
 
 
 2. Common codes
