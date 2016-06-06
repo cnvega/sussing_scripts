@@ -3,6 +3,6 @@ syn keyword CTagsMember npart ForestHeader hostHalo Forest Nhalos MergerTreeHead
 syn keyword CTagsGlobalVariable LowerIdx NhalosTot FIDX Forest FID HigherIdx Nhalos
 syn keyword CTagsEnumeratorName Status
 syn keyword CTagsEnumerationValue READ WRITE READB WRITEB
-syn keyword CTagsFunction close_catalogs parse_string_to_halo parse_halo_to_string open_forest copy_forest skip_forest_halos open_catalogs next_forest main read_next_forest check_halo
+syn keyword CTagsFunction close_catalogs skip_and_check_forest parse_string_to_halo parse_halo_to_string open_forest copy_forest skip_forest_halos open_catalogs next_forest main read_next_forest check_halo
 syn keyword CTagsDefinedName _FORESTS_C LINE_MAX BAD_VALUE _FORESTS_H OUTPUTS MAXFORESTS
 

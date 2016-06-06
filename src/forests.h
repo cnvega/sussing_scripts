@@ -77,4 +77,6 @@ void parse_string_to_halo(struct Halo_Data *halo, char *line);
 
 void parse_halo_to_string(char *line, struct Halo_Data *halo);
 
+void skip_and_check_forest(struct Rockstar_Data *cat);
+
 #endif
