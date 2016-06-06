@@ -3,7 +3,7 @@ CCFLAGS = -std=c99 -Wno-unused-result -lm
 #CCFLAGS += -O2 
 CCFLAGS += -g
 
-all: select_forests extract_forests split_forests 
+all: select_forests extract_forests split_forests catalog_check
 
 .PHONY: clean
 
@@ -18,6 +18,9 @@ extract_forests: extract_forests.o forests.o
 
 split_forests: split_forests.o forests.o
 	$(CC) forests.o split_forests.o -o split_forests $(CCFLAGS)
+
+catalog_check: catalog_check.o forests.o
+	$(CC) forests.o catalog_check.o -o catalog_check $(CCFLAGS)
 
 clean:
 	rm -f select_forests extract_forests split_forests *.o

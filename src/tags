@@ -52,6 +52,7 @@ close_catalogs	forests.c	/^void close_catalogs(struct Rockstar_Data *cat)$/;"	f
 copy_forest	forests.c	/^void copy_forest(struct Rockstar_Data *dest, struct Rockstar_Data *src)$/;"	f
 hostHalo	forests.h	/^   int64_t hostHalo;     \/\/(2)$/;"	m	struct:Halo_Data
 lambdaE	forests.h	/^   float   lambdaE;  \/\/(21)$/;"	m	struct:Halo_Data
+main	catalog_check.c	/^int main(int argc, char **argv)$/;"	f
 main	extract_forests.c	/^int main(int argc, char **argv)$/;"	f
 main	select_forests.c	/^void main()$/;"	f
 main	split_forests.c	/^int main(int argc, char **argv)$/;"	f
@@ -64,5 +65,6 @@ parse_halo_to_string	forests.c	/^void parse_halo_to_string(char *line, struct Ha
 parse_string_to_halo	forests.c	/^void parse_string_to_halo(struct Halo_Data *halo, char *line)$/;"	f
 read_next_forest	forests.c	/^int64_t read_next_forest(struct Rockstar_Data *cat)$/;"	f
 sigV	forests.h	/^   float   sigV;     \/\/(19)$/;"	m	struct:Halo_Data
+skip_and_check_forest	forests.c	/^void skip_and_check_forest(struct Rockstar_Data *cat)$/;"	f
 skip_forest_halos	forests.c	/^void skip_forest_halos(struct Rockstar_Data *cat)$/;"	f
 status	forests.h	/^   enum Status status;$/;"	m	struct:Rockstar_Data	typeref:enum:Rockstar_Data::Status

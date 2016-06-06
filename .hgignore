@@ -3,6 +3,9 @@ syntax: glob
 *.dat
 *.list
 *.o
+*.bz2
+*.gz
 *tags
 *.taghl
 *_forests
+catalog_check

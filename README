@@ -26,7 +26,7 @@ Contents:
  each one does not need to call the others for working.
  There are three groups of scripts included in this package: 
  - the common codes which are the frequently used for convert/split/
- extract groups of forest,
+ extract groups of forests,
  - the read_bin codes which can parse the binary format of the files to
  ASCII, and
  - the extra scripts which perform specific and non common features.
@@ -77,7 +77,7 @@ Contents:
 
  This is used for generating the calibration box of the simulation.
  It takes a list of halos at z=0 (an ASCII file with the halos IDs and 
- their indexes of their location in the catalog) and generates a new list 
+ the indexes of their locations in the catalog) and generates a new list 
  with the forests to which the halos belong, excluding the repeated ones. 
 
  For using this pipeline it is necessary to modify the source code before
@@ -124,7 +124,7 @@ Contents:
  These three codes are located in the './read_bin/' directory and can be 
  compiled just by doing 'make' in there. Each code can read one of the
  three types of catalogs in binary: halo list, merger tree and forest
- list, and it parses them completely to its ASCII version into stdout.
+ list, and it parses them completely to their ASCII versions into stdout.
  Can be used to perform consistency checks or recover the original files.
 
 

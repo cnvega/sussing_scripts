@@ -410,4 +410,49 @@ void parse_halo_to_string(char *line, struct Halo_Data *halo)
          halo->cNFW);          // (25)
 }
 
+void skip_and_check_forest(struct Rockstar_Data *cat)
+{
+   int64_t i, p;
+   int64_t i64tmp, nhalos, mtree[2];
+   int64_t haloid;
+   int s;
+   char stmp[LINE_MAX];
+
+   if (cat->status == READ)
+   {
+      for (s=0; s<cat->Nsnaps; s++)
+         for (i=1; i<=cat->Nhalos[s]; i++)
+         {
+            /* Merger Tree */
+            fscanf(cat->MergerTree, "%"SCNd64, &haloid);   
+            fscanf(cat->MergerTree, "%"SCNd64"\n", &nhalos);
+            
+            for (p=1; p<=nhalos; p++)
+               fscanf(cat->MergerTree, "%"SCNd64"\n", &i64tmp);   
+
+            /* Catalog */
+            fscanf(cat->Catalogs[s], "%"SCNd64, &i64tmp);   
+            fgets(stmp, LINE_MAX, cat->Catalogs[s]);
+
+            if (i64tmp != haloid)
+            {
+               fprintf(stderr,"Error: The merger tree is inconsistent!\n");
+               fprintf(stderr,"       Snap: %d id-cat: %"PRId64" id-mt: %"PRId64"\n",s, i64tmp, haloid);
+               exit(EXIT_FAILURE);
+            }
+         }
+
+   }
+   else if (cat->status == READB)
+   {
+      fprintf(stderr, "ERROR: Not implemented yet!\n");
+      exit(EXIT_FAILURE);
+   }
+   else
+   {
+      fprintf(stderr, "ERROR: Cannot read forest in these catalogs: %s\n", cat->Path);
+      exit(EXIT_FAILURE);
+   }
+}
+
 #endif
