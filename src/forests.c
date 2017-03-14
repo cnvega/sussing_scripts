@@ -43,7 +43,7 @@ open_catalogs(char *basename, float *snaps, int nsnaps, enum Status status)
 
    if (!(cat->Forest = fopen(fname, &st)))
    {
-      fprintf(stderr, "Cannot open forest file: %s\n", fname);
+      fprintf(stderr, "Cannot open forest file %s: %s, (%u)\n", fname, strerror(errno), errno);
       exit(EXIT_FAILURE);
    }
    cat->FID = 0;
@@ -70,7 +70,7 @@ open_catalogs(char *basename, float *snaps, int nsnaps, enum Status status)
          sprintf(fname, "%s/sussing_%03d.z%.3f.dat", cat->Path, s, cat->Z[s]);
       if (!(cat->Catalogs[s] = fopen(fname, &st)))
       {
-         fprintf(stderr, "Cannot open catalog file: %s\n", fname);
+         fprintf(stderr, "Cannot open catalog file %s: %s, (%u)\n", fname, strerror(errno), errno);
          exit(EXIT_FAILURE);
       }
       if (status == READ)
@@ -89,7 +89,7 @@ open_catalogs(char *basename, float *snaps, int nsnaps, enum Status status)
       sprintf(fname, "%s/sussing_tree.dat", cat->Path);
    if (!(cat->MergerTree = fopen(fname, &st)))
    {
-      fprintf(stderr, "Cannot open merger tree file: %s\n", fname);
+      fprintf(stderr, "Cannot open merger tree file %s: %s, (%u)\n", fname, strerror(errno), errno);
       exit(EXIT_FAILURE);
    }
 
