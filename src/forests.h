@@ -6,6 +6,8 @@
 #include <inttypes.h>
 #include <string.h>
 
+#include <errno.h>
+
 #define LINE_MAX 1024
 #define BAD_VALUE 2e38
 

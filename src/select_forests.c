@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 #define MAXFORESTS 300000
-#define OUTPUTS 126
+#define OUTPUTS 177
 
 FILE *Forest;
 int64_t FID, FIDX;
@@ -35,9 +35,9 @@ void main()
 
    return;
 
-   sprintf(forestName, "/data/MDPL/CB_ascii/BOX_004/sussing_forests.list");
-   sprintf(listName, "b04massive_mdpl.dat");
-   sprintf(outName, "b04massive_forest_mdpl.list");
+   sprintf(forestName, "/fast_scratch2/cnvega/MBII/Sussing_ascii/sussing_forests.list");
+   sprintf(listName, "BOX_12.dat");
+   sprintf(outName, "BOX_12_forests.list");
 
    if (!(list=fopen(listName, "r")))
    {
