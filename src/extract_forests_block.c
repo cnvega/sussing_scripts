@@ -67,7 +67,8 @@ int main(int argc, char **argv)
    while (fgetc(fin) != '\n');  // skip the first line 
    for (s=0; s<numSnaps; s++) 
    {
-      fscanf(fin, " %d  %f  %f  %g %g\n", &iaux, &faux[0], &faux[1], &faux[2], &faux[3]);
+      //fscanf(fin, " %d  %f  %f  %g %g\n", &iaux, &faux[0], &faux[1], &faux[2], &faux[3]);
+      fscanf(fin, " %d  %f  %f\n", &iaux, &faux[0], &faux[1]);
       ZZ[iaux]  = faux[1];
    }
    fclose(fin);

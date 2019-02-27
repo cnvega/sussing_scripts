@@ -13,19 +13,19 @@ int main(int argc, char **argv)
    char stmp[LINE_MAX];
    char bintag;
 
-   int numSnaps, numParts;
+   int numSnaps, numParts=0;
    float *ZZ;
 
-   int64_t hid, hidx;
+   int64_t maxForests=0, nForests=0;
 
-   struct Rockstar_Data *inCat, **outCat;
+   struct Rockstar_Data *inCat, *outCat;
    enum Status stin, stout;
 
    struct stat st = {0};
 
    if (argc != 6 && argc != 7)
    {
-      printf("./split_forests <inPath> <outPath> <snapList> <NumSnaps> <NumParts> [i|b|o]\n"
+      printf("./split_forests_nf <inPath> <outPath> <snapList> <NumSnaps> <N Forests> [i|b|o]\n"
              " binary format flag: 'i'(input), 'o'(output) or 'b'(both)\n");
       exit(EXIT_FAILURE);
    }
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
    sprintf(outPath, "%s", argv[2]);
    sprintf(snapName, "%s", argv[3]);
    numSnaps = atoi(argv[4]);
-   numParts = atoi(argv[5]);
+   maxForests = atoi(argv[5]);
  
    stin = READ;
    stout = WRITE;
@@ -76,32 +76,26 @@ int main(int argc, char **argv)
    fclose(flist);
    
    inCat = open_catalogs(inPath, ZZ, numSnaps, stin);
-   outCat = malloc(numParts*sizeof(struct Rockstar_Data*));
-
-   for (box=0; box<numParts; box++)
-   {
-      sprintf(stmp, "%s/BOX_%.3d", outPath, (box+1));
-
-      if (stat(stmp, &st) == -1) 
-         mkdir(stmp, 0755);
-
-      outCat[box] = open_catalogs(stmp, ZZ, numSnaps, stout);
-   }
-
-   box = 0;
-   while (read_next_forest(inCat) != -1)
-   {
-      copy_forest(outCat[box], inCat);
-      box++;
-      if (box == numParts)
-         box = 0;
+   
+   box=1;
+   sprintf(stmp, "%s/BOX_%.3d", outPath, box);
+   if (stat(stmp, &st) == -1) mkdir(stmp, 0755);
+   outCat = open_catalogs(stmp, ZZ, numSnaps, stout);
+   
+   while (read_next_forest(inCat) != -1) {
+      if (nForests == maxForests) {
+         close_catalogs(outCat);
+         box++;
+         sprintf(stmp, "%s/BOX_%.3d", outPath, box);
+         if (stat(stmp, &st) == -1) mkdir(stmp, 0755);
+         outCat = open_catalogs(stmp, ZZ, numSnaps, stout);
+         nForests = 0;
+      }
+      copy_forest(outCat, inCat);
+      nForests++;
    }
 
    close_catalogs(inCat);
-   for (box=0; box<numParts; box++)
-      close_catalogs(outCat[box]);
-
-   free(outCat);
 
    return(EXIT_SUCCESS);
 }
