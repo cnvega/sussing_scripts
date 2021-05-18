@@ -17,7 +17,7 @@ void open_forest(char *);
 void next_forest();
 bool check_halo(int64_t);
 
-void main()
+int main()
 {
    FILE *forest, *list, *fout;
    char forestName[255];
@@ -33,7 +33,7 @@ void main()
 
    int64_t totHalos=0;
 
-   return;
+   return 0;
 
    sprintf(forestName, "/fast_scratch2/cnvega/MBII/Sussing_ascii/sussing_forests.list");
    sprintf(listName, "BOX_12.dat");
@@ -85,6 +85,8 @@ void main()
    fclose(list);
    fclose(Forest);
    fclose(fout);
+
+   return 0;
 }
 
 void open_forest(char *fname)

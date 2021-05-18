@@ -11,6 +11,7 @@ int main(int argc, char **argv)
    char line[LINE_MAX];
 
    struct Halo_Data halo;
+   printf("Size of Halo_Data: %d\n", sizeof(struct Halo_Data));
 
    if (argc != 2)
    {

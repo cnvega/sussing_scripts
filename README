@@ -2,9 +2,8 @@
 #                                                                  #
 #   SUSSING Scripts                                                #
 #                                                                  #
-#   Author: Cristian Vega <cnvega(at)fcaglp.unlp.edu.ar>           #
-#   Last Update: Aug 27, 2015                                      #
-#   Copyright © 2016 Cristian A. Vega M.                           #
+#   Author: Cristian Vega <cristian(dot)vegam(at)userena(dot)cl>   #
+#   Copyright © 2016-2021 Cristian A. Vega M.                      #
 #                                                                  #
 ####################################################################
 
@@ -16,7 +15,7 @@ Contents:
      2.2 'select_forests'
      2.3 'extract_forests'
   3. The read_bin codes
-  4. The Extra scripts
+  4. Extra python scripts
 
 
 1. General
@@ -134,9 +133,10 @@ Contents:
 
 4. The extra scripts
 
- These python scripts are included for completeness but are not necessary
- in the common treatment of rockstar-sussing catalogs. These scripts are
- the followings:
+ A set of python scripts are included in an 'extra' directory to process,
+ analyse, and complete several specific task with the catalogs, but they
+ are not part of the regular treatment of the rockstar-sussing catalogs. 
+ Brief descriptions of these scripts are included in the following. 
 
  - 'check_order.py': It checks if a list of halos (like the one needed as
  input for the 'select_forests') code has its halos ordered by their
@@ -150,6 +150,8 @@ Contents:
  There are versions of the AHF MergerTree finder which generates MT files 
  in where the halos are exactly in the opposite order than the rockstar's
  one. 
+
+ - 'pysussing': A collection of Python scripts to read the sussing files.
 
 #EOF
 # vim: tw=75 formatoptions+=t 

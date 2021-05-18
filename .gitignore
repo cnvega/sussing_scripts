@@ -1,0 +1,11 @@
+*.o
+*.pyc
+read_bin/rbin_catalog
+read_bin/rbin_forests
+read_bin/rbin_mtree
+extract_forests
+extract_forests_block
+select_forests
+split_forests
+split_forests_nf
+catalog_check
