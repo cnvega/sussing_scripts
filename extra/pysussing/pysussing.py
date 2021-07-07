@@ -45,10 +45,11 @@ class _ascii_prop_type:
 #asciipsr[np.array([14,15,16,18,20])] = False
 
 class Catalog:
-   def __init__(self, dirname, binary=False):
+   def __init__(self, dirname, binary=False, readMergerTree=False):
      
       filenames = os.listdir(dirname)
       self.binary = binary
+      self.readMergerTree = readMergerTree
       self.Nsnaps = 0
 
       self.ptype = _ascii_prop_type()
@@ -86,6 +87,7 @@ class Catalog:
 
       # start the reading counter
       self.readcount = np.zeros(self.Nsnaps, dtype=np.int64)
+      self._gotProgs = False
       
       # skip the headers and load the first forest:
       self.reset()
@@ -111,8 +113,12 @@ class Catalog:
          for i in range(3): _ = self.trees.readline()
          for cat in self.catalogs: _ = cat.readline()
       self._read_nhalos_forest()
+      self._gotProgs = False
 
    def _read_nhalos_forest(self):
+      """
+      It reads the forests' number of halos from the forests file.
+      """
       if self.binary:
          buf = self.forests.read(8*2)
          if not buf:
@@ -133,6 +139,9 @@ class Catalog:
          
 
    def _read_halo(self, snap):
+      """
+      It reads the properties of one halo from the corresponding catalog.
+      """
       if self.readcount[snap]:
          if self.binary:
             # I needed to add the padding bytes explicitly here...
@@ -146,6 +155,9 @@ class Catalog:
          return halop
 
    def get_halos_snap(self, snap):
+      """
+      It returns the complete list of halos from a snapshot of the current forest.
+      """
       h = []
       for _ in range(self.readcount[snap]):
          h.append(self._read_halo(snap))
@@ -153,16 +165,82 @@ class Catalog:
       return np.array(h, dtype=self.ptype.dtype+[('snapshot','i4')])
 
    def get_forest(self):
+      """
+      It returns the complete list of halos of the current forest. 
+      """
       h = []
       for snap in range(self.Nsnaps):
          for _ in range(self.readcount[snap]):
             h.append(self._read_halo(snap))
       return np.array(h, dtype=self.ptype.dtype+[('snapshot','i4')])
 
+
+   def get_progenitors(self):
+      """
+      It returns the merger tree (list of progenitors) of the forest.
+      """
+      if self.readMergerTree:
+         if self._gotProgs: return None
+         halos = np.zeros((self.forest_tot, ), dtype=np.int64)  
+         numprogs = np.zeros((self.forest_tot, ), dtype=np.int64)
+         firstprog = np.zeros((self.forest_tot, ), dtype=np.int64)
+         progs = np.zeros((2*self.forest_tot, ), dtype=np.int64)
+         
+         cursize = 2*self.forest_tot
+         i_h, i_p = 0, 0
+         
+         if self.binary:
+            raise RuntimeError("Binary MT reading not implemented yet.")
+         
+         else:
+            for _ in range(self.forest_tot):
+               line = self.trees.readline().split()
+               halos[i_h] = int(line[0]) 
+               numprogs[i_h] = int(line[1])
+               if numprogs[i_h] > 0:
+                  firstprog[i_h] = i_p
+               else: 
+                  firstprog[i_h] = -1
+                
+               # Check if the array has enough space and resize if needed.
+               if (i_p + 1 + numprogs[i_h]) > cursize:
+                  cursize = int(1.5*cursize)
+                  progs.resize((cursize, ))
+               # Store progenitors:
+               for _ in range(numprogs[i_h]):
+                  progs[i_p] = int(self.trees.readline().split()[0])
+                  i_p += 1
+               i_h += 1
+            
+            # Final resizing:
+            progs.resize((i_p, )) 
+         
+         self._gotProgs = True
+         mt = {'HaloID':halos, 'NumProgs':numprogs, 
+               'FirstProg':firstprog, 'Progenitors':progs}
+         return mt
+      
+      else:
+         raise RuntimeError("Catalog initialized without MT reading")
+      
+      
    def next_forest(self):
       # Read remaining halos:
       for snap in range(self.Nsnaps):
          for _ in range(self.readcount[snap]):
             _ = self._read_halo(snap)
+      
+      # Read MT if it was not read: 
+      if self.readMergerTree:
+         if not self._gotProgs:
+            if self.binary:
+               raise RuntimeError("Binary MT reading not implemented yet.")
+            else:
+               for _ in range(self.forest_tot):
+                  line = self.trees.readline().split()
+                  for _ in range(int(line[1])):
+                     self.trees.readline()
+         self._gotProgs = False
+
       self._read_nhalos_forest()
 
